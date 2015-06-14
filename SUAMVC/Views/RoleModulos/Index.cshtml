@@ -1,0 +1,131 @@
+﻿@model SUAMVC.Models.RoleModulosModel
+@{
+    ViewBag.Title = "Roles y Modulos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (!WebSecurity.IsAuthenticated)
+    {
+        Response.Redirect("~/Home/Index");
+    }
+    
+    var vRoleId = TempData["vRoleId"];
+
+    var tableHtml = string.Empty;
+    var tableHtml2 = string.Empty;
+    var sb = new System.Text.StringBuilder();
+    var sb2 = new System.Text.StringBuilder();
+    var grid = new WebGrid();
+    var grid2 = new WebGrid();
+
+
+    if (Model != null)
+    {
+        if (Model.modulos != null)
+        {
+            grid = new WebGrid(source: Model.modulos, rowsPerPage: 5);
+            sb.Append(grid.GetHtml(
+        columns:
+            grid.Columns(
+                grid.Column(format: @<text><input type="checkbox" name="ids" value="@item.id" /></text>, header: "Elegir"),
+            grid.Column("descripcionCorta", "Descripcion", null, null, true),
+            grid.Column("descripcionLarga", "Funcionalidad", null, null, true)
+            ),
+            tableStyle: "table table-fixed tableSua"));
+        }
+
+        if (Model.modulosByRole != null)
+        {
+            grid2 = new WebGrid(source: Model.modulosByRole, rowsPerPage: 5);
+            sb2.Append(grid2.GetHtml(
+        columns:
+            grid2.Columns(
+                grid2.Column(format: @<text><input type="checkbox" name="ids2" value="@item.id" /></text>, header: "Elegir"),
+                grid2.Column("descripcionCorta", "Descripcion", null, null, true),
+                grid2.Column("descripcionLarga", "Funcionalidad", null, null, true)
+            ),
+            tableStyle: "table table-fixed tableSua"));
+        }
+
+
+        tableHtml = sb.ToString();
+        tableHtml2 = sb2.ToString();
+    }
+
+}
+
+@section Menu {
+    <div><img src="~/Content/Images/people-b.png" width="15" height="15" /> Asociar Rol a Modulos</div>
+}
+@using (Html.BeginForm())
+{
+    <p>Role:@Html.DropDownList("roleId", null, new { onchange = "form.submit();" })</p>
+}
+
+<div id="contenedor">
+    @if (!tableHtml.IsEmpty())
+    {
+        using (Html.BeginForm("asignarModulo", "RoleModulos", new { roleId = @vRoleId }, FormMethod.Post))
+        {
+            <div id="lgcontenedor-interno" class="panel panel-default">
+                <div class="panel-heading">Modulos sin asignar</div>
+                <div class="panel-body">
+                    <div id="lcontenedor-interno">
+                        <input type="checkbox" id="selectAllm" name="slallm" /> Todos
+                        @Html.Raw(tableHtml)
+                    </div>
+                    <div id="bcontenedor-interno">
+                        <input type="submit" value="" class="rarrow_button" alt="Asignar Modulo"/>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    @if (!tableHtml2.IsEmpty())
+    {
+        using (Html.BeginForm("desasignarModulo", "RoleModulos", new { roleId = @vRoleId }, FormMethod.Post))
+        {
+            <div id="rgcontenedor-interno" class="panel panel-default">
+                <div class="panel-heading">Modulos asignados</div>
+                <div class="panel-body">
+                    <div id="lcontenedor-interno">
+                        <input type="checkbox" id="selectAllm2" name="slallm2" /> Todos
+                        @Html.Raw(tableHtml2)
+                    </div>
+                    <div id="bcontenedor-interno">
+                        <input type="submit" value="" class="larrow_button" alt="Desasignar Modulo" />
+                    </div>
+                </div>
+            </div>
+
+
+        }
+
+    }
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("input[name=slallm]").change(function () {
+            $('#lgcontenedor-interno input[type=checkbox]').each(function () {
+                if ($("input[name=slallm]:checked").length == 1) {
+                    this.checked = true;
+                } else {
+                    this.checked = false;
+                }
+            });
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //Checkbox
+        $("input[name=slallm2]").change(function () {
+            $('#rgcontenedor-interno input[type=checkbox]').each(function () {
+                if ($("input[name=slallm2]:checked").length == 1) {
+                    this.checked = true;
+                } else {
+                    this.checked = false;
+                }
+            });
+        });
+
+    });
+</script>

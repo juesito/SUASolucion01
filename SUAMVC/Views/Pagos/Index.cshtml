@@ -1,0 +1,249 @@
+﻿@model IEnumerable<SUADATOS.ResumenPago>
+@using SUADATOS
+@using SUAMVC.Models
+@using System.Text;
+
+
+@{
+    ViewBag.Title = "Pagos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (!WebSecurity.IsAuthenticated)
+    {
+        Response.Redirect("~/Home/Index");
+    }
+
+   
+    var buscar = "0";
+    if (TempData["buscador"] != null)
+    {
+        buscar = TempData["buscador"] as String;
+    }
+    Usuario usuario = Session["UsuarioData"] as Usuario;
+
+    var grid = new WebGrid(source: Model, rowsPerPage: 12);
+    @functions {
+        static IHtmlString ShowPDF(string id)
+        {
+            return id != null ? new HtmlString("<img src=\"/Content/Images/pdf.gif\" class=\"icon\" />") : null;
+        }
+    }
+
+    var tableHtml = string.Empty;
+    var sb = new StringBuilder();
+
+    //Creamos una lista de columnas
+    var gridColumns = new List<WebGridColumn>();
+    gridColumns.Add(grid.Column(format: @<text><input type="checkbox" name="ids" value="@item.id" /></text>, header: "{}"));
+    gridColumns.Add(grid.Column("Patrone.registro", "Registro Patronal", format: @<text> @if (@item.Patrone != null)
+    {  @item.Patrone.registro }</text>, canSort: true));
+    gridColumns.Add(grid.Column("anno", "Año Pago", null, null, true));
+    gridColumns.Add(grid.Column("mes", "Mes", null, null, true));
+    
+    gridColumns.Add(grid.Column("rfc", "RFC", null, null, true));
+    gridColumns.Add(grid.Column("nombreTemporal", "Nombre", @<text><div style='width: 25em'>@item.nombreTemporal</div></text> , null, canSort: true));
+    gridColumns.Add(grid.Column("fechaAlta", "Fecha Alta", @<text><div style='width: 6em'>@item.fechaAlta.ToString("dd-MM-yyyy")     </div></text>, null, canSort: true));
+    gridColumns.Add(grid.Column("fechaBaja", "Fecha Baja", @<text><div style='width: 6em'>
+            @if (@item.fechaBaja != null)
+            { @item.fechaBaja.ToString("dd-MM-yyyy")}
+</div></text>, null, canSort: true));
+    gridColumns.Add(grid.Column("salarioImss", "Salario IMSS", format: @<text>@item.salarioImss.ToString("0.00")</text>, canSort: true));
+    gridColumns.Add(grid.Column("Cliente.claveCliente", "Ubicación", format: @<text> @if (@item.Cliente != null)
+    {@item.Cliente.claveCliente}</text>, canSort: true));
+    gridColumns.Add(grid.Column("Cliente.Grupos.nombreCorto", "ID.Grupo", format: @<text> @if (@item.Cliente != null)
+    {@item.Cliente.Grupos.nombreCorto}</text>, canSort: true));
+    gridColumns.Add(grid.Column("ocupacion", "Ocupación",  @<text><div style='width: 12em'>@item.ocupacion </div></text>, null, canSort: true));
+    gridColumns.Add(grid.Column("Cliente.Plaza.cveCorta", "ID.Plaza", null, null, true));
+    gridColumns.Add(grid.Column("extranjero", "Extranjero", null, null, true));
+
+    if (SecurityUserModel.verificarPermiso("Asegurados", "Ver columna creacion"))
+    {
+        gridColumns.Add(grid.Column("fechaCreacion", "Fecha Creacion", @<text><div style='width: 13em'>@item.fechaCreacion </div></text>, null, canSort: true));
+    }
+
+    if (SecurityUserModel.verificarPermiso("Asegurados", "Ver columna modificacion"))
+    {
+        gridColumns.Add(grid.Column("fechaModificacion", "Fecha Modificación", @<text><div style='width: 13em'>
+                @if (@item.fechaModificacion != null)
+                { @item.fechaModificacion}
+    </div></text>, null, canSort: true));
+    }
+
+    gridColumns.Add(grid.Column(header: "Alta", format:@<text><a href="@Url.Action("ViewAttachment", "Asegurados", new { id = item.id, option = "A", carga = item.alta })" target="_blank">@ShowPDF(item.alta)</a></text>));
+    gridColumns.Add(grid.Column(header: "Modificación", format:@<text><a href="@Url.Action("ViewAttachment", "Asegurados", new { id = item.id, option = "M", carga = item.modificacion })" target="_blank">@ShowPDF(item.modificacion)</a></text>));
+    gridColumns.Add(grid.Column(header: "Baja", format:@<text><a href="@Url.Action("ViewAttachment", "Asegurados", new { id = item.id, option = "B", carga = item.baja })" target="_blank">@ShowPDF(item.baja)</a></text>));
+    gridColumns.Add(grid.Column(header: "Permanente", format:@<a href="@Url.Action("ViewAttachment", new { id = item.id, option = "P", carga = item.permanente })" target="_blank">@ShowPDF(item.permanente)</a>));
+
+    if (SecurityUserModel.verificarPermiso("Asegurados", "Consultar detalle"))
+    {
+        gridColumns.Add(grid.Column(header: "Consulta", format: @<text><a href="@Url.Action("Details", "Asegurados", new { id = item.id })"><img src="~/Content/Images/list.png" alt="" style="border:none;" class="icon" /></a></text>));
+    }
+
+    if (SecurityUserModel.verificarPermiso("Asegurados", "Subir acuse"))
+    {
+        gridColumns.Add(grid.Column(header: "Imagen", format: @<text><a href="@Url.Action("UploadFile", "Movimientos", new { id = item.id })"><img src="~/Content/Images/upload-blue.png" alt="" style="border:none;" class="icon" /></a></text>));
+    }
+
+    sb.Append(grid.GetHtml(
+        columns: grid.Columns(gridColumns.ToArray()),
+                        tableStyle: "table table-striped tableSua"
+                    ));
+
+    //sb =
+    tableHtml = sb.ToString().Replace("{}", "<input type='checkbox' id='selectAll' name='slall' />").Trim();
+
+//    var flagMenu = @ViewBag.flagMenus;
+}
+
+@section Menu {
+    <div><img src="~/Content/Images/people-b.png" width="15" height="15" /> Catalogo de Asegurados</div>
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Get))
+{
+    //MarqueeFilter - Todos los filtros principales
+    <div class="marqueeFilter">
+        <table style="float:left; margin-top:5px;display:inline-block;">
+            <thead>
+                <tr style="text-align:left;vertical-align:bottom;">
+                    <td style="padding-top:15px">
+                        <b>@Language.plaza:</b>
+                    </td>
+                    <td>
+                        @Html.DropDownList("plazasId", "Seleccione")
+                    </td>
+                    <td>
+                        <b>@Language.patron:</b>
+                    </td>
+                    <td>
+                        @Html.DropDownList("patronesId", "Seleccione")
+                    </td>
+                    <td>
+                        <b>@Language.grupo:</b>
+                    </td>
+                    <td>
+                        @Html.DropDownList("gruposId", "Seleccione")
+                    </td>
+                    <td>
+                        <b>@Language.cliente:</b>
+                    </td>
+                    <td>
+                        @Html.DropDownList("clientesId", "Seleccione")
+                    </td>
+                </tr>
+            </thead>
+        </table>
+
+        <table style="margin-left:20px; margin-top:10px; float:left;">
+            <thead>
+                <tr>
+                    <td rowspan="2" style="padding-left:15px">
+                        <input type="submit" value="Consultar" class="btn btn-success" style="width:80px; height:30px; font-size:10px;" />
+                    </td>
+                    <td style="padding-right:10px; padding-left:10px" rowspan="2">
+                        @if (SecurityUserModel.verificarPermiso("Asegurados", "Descargar excel"))
+                        {
+                            <a href="@Url.Action("GetExcel", "Asegurados", new{ plazasId = @ViewBag.pzaId, patronesId = @ViewBag.patId,
+                                clientesId = @ViewBag.cteId, gruposId = @ViewBag.gpoId, opcion = @ViewBag.opBuscador, valor = @ViewBag.valBuscador, statusId = @ViewBag.statusId
+                                })" style="text-align:right">
+                                <img src="~/Content/Images/xls.png" title="@Language.toExcel" alt="@Language.toExcel" style="border:none;" width="35" height="35" />
+                            </a>
+                        }
+
+                    </td>
+
+
+            </thead>
+        </table>
+
+        <div>
+            <table style="margin-left:20px; margin-top:10px; ">
+                <thead>
+                    <tr>
+
+                        <td style="padding-right:10px;" rowspan="2">
+                            <a href="@Url.Action("ActivaVariable", "Asegurados", new
+                            {
+                                buscador = @TempData["buscador"], plazasId = @ViewBag.pzaId, patronesId = @ViewBag.patId,
+                                clientesId = @ViewBag.cteId, gruposId = @ViewBag.gpoId, opcion = @ViewBag.opBuscador,
+                                valor = @ViewBag.valBuscador
+                            })">
+                                @if (buscar.Equals("1"))
+                                {
+                                    <img src="~/Content/Images/hide.png" alt="@Language.advanceSearch"
+                                         title="@Language.advanceSearch" style="border:none;" width="30" height="25" />
+                                }
+                                else
+                                {
+                                    <img src="~/Content/Images/show.png" alt="@Language.advanceSearch"
+                                         title="@Language.advanceSearch" style="border:none;" width="30" height="25" />
+
+                                }
+                            </a>
+                        </td>
+                        @if (buscar.Equals("1"))
+                        {
+                            <td><b>@Language.criterio</b></td>
+                            <td>@Html.FieldsAvailablesToFilterAcreditados()</td>
+                            <td>@Html.Label("valor", Language.valor)</td>
+                            <td>@Html.TextBox("valor")</td>
+                            <td><input type="submit" value="" class="rsearch_button" title="@Language.consulta" /></td>
+                        }
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+
+                        //Etiqueta de No. de registros
+                        if (ViewBag.registros != null)
+                        {
+                            <div style="column-span:inherit; height:20px; font-size:10px; text-align:center; padding-top:10px">
+                                <div style="margin-right:4px;display:inline-block;vertical-align:top;">
+                                    <p style="font-weight:bold">Registros: @Html.Label(Language.registros, Convert.ToString((int)ViewBag.registros))</p>
+                                </div>
+                                @if (ViewBag.statusId == null || ViewBag.statusId.Equals(""))
+                                {
+                                    <div style="margin-right:4px;display:inline-block;vertical-align:top;">
+                                        <p style="font-weight:bold">
+                                            Activos:
+                                            @Html.Label("Activos: ", Convert.ToString((int)ViewBag.activos))
+                                        </p>
+                                    </div>
+                                }
+                                <div style="display:inline-block;">
+                                    @Html.SearchStatusList()
+                                </div>
+                            </div>
+                        }
+}
+
+
+@using (Html.BeginForm("UploadFiles", "Movimientos", FormMethod.Post))
+{
+    if (SecurityUserModel.verificarPermiso("Asegurados", "Subir acuse"))
+    {
+        <input type="submit" value="" class="rpdf_button" title="@Language.subirAcuseMax" />
+    }
+
+    if (!tableHtml.IsEmpty())
+    {
+        <div id="table-container" class="table-container">
+            @Html.Raw(tableHtml)
+        </div>
+    }
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("input[name=slall]").change(function () {
+            $('#table-container input[type=checkbox]').each(function () {
+                if ($("input[name=slall]:checked").length == 1) {
+                    this.checked = true;
+                } else {
+                    this.checked = false;
+                }
+            });
+        });
+    });
+</script>

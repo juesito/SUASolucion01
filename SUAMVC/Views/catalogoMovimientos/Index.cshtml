@@ -1,0 +1,31 @@
+﻿@model IEnumerable<SUADATOS.catalogoMovimiento>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var grid = new WebGrid(source: Model, rowsPerPage: 10);
+}
+
+@section Menu {
+    <div>Catalogo de Movimientos <img src="~/Content/Images/people-b.png" width="15" height="15" /></div>
+}
+@grid.GetHtml(
+    columns:
+        grid.Columns(
+            grid.Column("tipo", "Clave", null, null, true),
+            grid.Column("descripcion", "Descripción", null, null, true),
+            grid.Column("fechaCreacion", "Fecha Creación", null, null, true),
+            grid.Column(header: "Consultar", format: @<text><a href="@Url.Action("Details", "CatalogoMovimientos", new { id = item.id })">
+                    <img src="~/Content/Images/edit.png" alt="" style="border:none;" class="icon" />
+                </a></text>),
+            grid.Column(header: "Editar", format: @<text><a href="@Url.Action("Edit", "CatalogoMovimientos", new { id = item.id })">
+                    <img src="~/Content/Images/edit.png" alt="" style="border:none;" class="icon" />
+                </a></text>),
+            grid.Column(header: "Eliminar", format: @<text><a href="@Url.Action("Delete", "CatalogoMovimientos", new { id = item.id })">
+                    <img src="~/Content/Images/delete.png" alt="" style="border:none;" class="icon" />
+                </a></text>)),
+                                        tableStyle: "table table-striped tableSua"
+                        )
+<p>
+    @Html.ActionLink("Crear Movimiento", "Create", "CatalogoMovimientos", new { @class = "btn btn-success" })
+</p>

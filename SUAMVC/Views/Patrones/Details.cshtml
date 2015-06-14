@@ -1,0 +1,217 @@
+﻿@model SUADATOS.Patrone
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (!WebSecurity.IsAuthenticated)
+    {
+        Response.Redirect("~/Home/Index");
+    }
+}
+
+@section Menu {
+    <div>Detalle Patrón <img src="~/Content/Images/home.png" width="15" height="15" /></div>
+}
+
+<div>
+    <h4>Patrones</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.rfc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.rfc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.actividad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.actividad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.domicilio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.domicilio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.municipio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.municipio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.codigoPostal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.codigoPostal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.entidad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.entidad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.telefono)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.telefono)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.remision)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.remision)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.zona)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.zona)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.delegacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.delegacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.carEnt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.carEnt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.numeroDelegacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.numeroDelegacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.carDel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.carDel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.numSub)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.numSub)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tipoConvenio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tipoConvenio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.convenio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.convenio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.inicioAfiliacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.inicioAfiliacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.patRep)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.patRep)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.clase)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.clase)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fraccion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fraccion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.STyPS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.STyPS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.registro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.registro)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Plaza.descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Plaza.descripcion)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Regresar", "Index")
+</p>

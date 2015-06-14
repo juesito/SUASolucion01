@@ -1,0 +1,63 @@
+﻿@model SUADATOS.Movimiento
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (!WebSecurity.IsAuthenticated)
+    {
+        Response.Redirect("~/Home/Index");
+    }
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Movimiento</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.lote)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.lote)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaTransaccion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaTransaccion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tipo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tipo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nombreArchivo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombreArchivo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Asegurado.numeroAfiliacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Asegurado.numeroAfiliacion)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

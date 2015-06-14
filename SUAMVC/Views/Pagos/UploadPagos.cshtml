@@ -1,0 +1,61 @@
+﻿@using SUADATOS;
+@{
+    ViewBag.Title = "Upload";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (!WebSecurity.IsAuthenticated)
+    {
+        Response.Redirect("~/Home/Index");
+    }
+    var message = @TempData["viewMessage"];
+    var isError = TempData["error"];
+    Usuario usuario = Session["UsuarioData"] as Usuario;
+}
+
+@section Menu {
+    <div>Cargar Pagos - Archivo SUA <img src="~/Content/Images/home.png" width="15" height="15" /></div>
+}
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        Cargar o actualizar los pagos por periodo - Archivo SUA
+    </div>
+    <div class="panel-body">
+        @using (@Html.BeginForm("Upload", "Pagos", FormMethod.Post,
+            new { enctype = "multipart/form-data" }))
+        {
+            <table>
+                <tbody>
+                    <tr>
+                        <td>@Html.Label("Patron :")</td>
+                        <td>@Html.patronesNoChangeKeysDrownList(usuario.Id)</td>
+                        <td>@Html.Label("Periodo :")</td>
+                        <td>@Html.periodosList()</td>
+                        <td>@Html.Label("Ejercicio :")</td>
+                        <td>@Html.ejercicioList()</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <div class="file">
+                                @FileUpload.GetHtml(initialNumberOfFiles: 1,
+                allowMoreFilesToBeAdded: false,
+                includeFormTag: true,
+                uploadText: "Subir SUA.mdb")
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        }
+    </div>
+    @if (isError != null)
+    {
+        if (isError.Equals(false))
+        {
+            <p><span class="label label-success">@message</span></p>
+        }
+        else
+        {
+            <p><span class="label label-danger">@message</span></p>
+        }
+    }
+</div>

@@ -1,0 +1,96 @@
+﻿@model SUAMVC.Models.AseguradoMovimientosModel
+
+@{
+    ViewBag.Title = "UploadFiles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (!WebSecurity.IsAuthenticated)
+    {
+        Response.Redirect("~/Home/Index");
+    }
+    var grid = new WebGrid(source: Model.allAsegurado, rowsPerPage: 12);
+}
+
+@section Menu {
+    <div>Carga de Multiples Asegurados (PDF) <img src="~/Content/Images/people-b.png" width="15" height="15" /></div>
+}
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        Cargar archivos para asegurados seleccionados
+    </div>
+    <div class="panel-body">
+        
+        @using (@Html.BeginForm("UploadPDFFiles", "Movimientos", FormMethod.Post,
+            new { enctype = "multipart/form-data" }))
+        {
+
+            
+            @Html.AntiForgeryToken()
+            
+            <table>
+                <tbody>
+                    <tr>
+                        <td style="font-weight:bold;">
+                            No. Lote IDSE:
+                        </td>
+                        <td>
+                            @Html.EditorFor(model => model.movimiento.lote)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold; padding-top:10px">
+                            Fecha Transacción:
+                        </td>
+                        <td style="padding-top:10px">
+                            @Html.EditorFor(model => model.movimiento.fechaTransaccion, new { htmlAttributes = new { @class = "myDate" } })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold; padding-top:10px">
+                            @Html.DisplayName("Tipo Documento:")
+                        </td>
+                        <td style="padding-top:10px">
+                            @Html.DropDownListFor(model => model.movimiento.tipo, new SelectList(new List<Object> {new {value = "A", text = "Alta"},
+               new {value = "B", text = "Baja"},
+               new {value = "M", text = "Modificación"},
+               new{value = "P" , text = "Autorización permanente"}
+               }, "value", "text", new { @class = "select1", style = "width: 150px;" }))
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold;padding-top:15px">
+                            Archivo Imagen: 
+                        </td>
+                        <td style="padding-top:20px">
+                            @FileUpload.GetHtml(initialNumberOfFiles: 1,
+                allowMoreFilesToBeAdded: false,
+                includeFormTag: true,
+                uploadText: "Guardar PDF")
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br />
+            <br />
+            <div>
+
+@grid.GetHtml(
+    columns:
+    grid.Columns(
+            grid.Column(format: @<text><input type="hidden" name="ids" value="@item.id" /></text>),
+            grid.Column("Patrone.registro", "Registro", null, null, true),
+            grid.Column("numeroAfiliacion", "Num. Afil", null, null, true),
+            grid.Column("nombreTemporal", "Nombre", null, null, true),
+             grid.Column("curp","CURP",null,null,true),
+            grid.Column("rfc", "RFC", null, null, true)
+        ),
+        
+                        tableStyle: "table table-striped tableSua")
+ 
+            </div>
+        }
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Regresar", "Index", "Asegurados")
+</div>

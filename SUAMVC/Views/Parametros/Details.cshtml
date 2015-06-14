@@ -1,0 +1,73 @@
+﻿@model SUADATOS.Parametro
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (!WebSecurity.IsAuthenticated)
+    {
+        Response.Redirect("~/Home/Index");
+    }
+}
+
+@section Menu {
+    <div>Detalle Parametro <img src="~/Content/Images/home.png" width="15" height="15" /></div>
+}
+
+<div>
+    <h4>Parametro</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.parametroId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.parametroId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.valorString)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.valorString)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.valorMoneda)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.valorMoneda)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.valorFecha)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.valorFecha)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

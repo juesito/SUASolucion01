@@ -1,0 +1,104 @@
+﻿@model SUADATOS.Funcion
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (!WebSecurity.IsAuthenticated)
+    {
+        Response.Redirect("~/Home/Index");
+    }
+}
+
+@section Menu {
+    <div>@Language.borrar @Language.funciones<img src="~/Content/Images/people-b.png" width="15" height="15" /></div>
+}
+  
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Funcion</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.descripcionCorta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.descripcionCorta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.descripcionLarga)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.descripcionLarga)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.accion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.accion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.controlador)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.controlador)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.estatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.estatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.usuarioId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuarioId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tipo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tipo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Modulo.descripcionCorta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Modulo.descripcionCorta)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

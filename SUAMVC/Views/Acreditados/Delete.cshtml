@@ -1,0 +1,273 @@
+﻿@model SUADATOS.Acreditado
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Acreditado</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.apellidoPaterno)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.apellidoPaterno)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.apellidoMaterno)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.apellidoMaterno)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nombreCompleto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombreCompleto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CURP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CURP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RFC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RFC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ubicacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ubicacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ocupacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ocupacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.idGrupo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.idGrupo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.numeroAfiliacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.numeroAfiliacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.numeroCredito)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.numeroCredito)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaAlta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaAlta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaBaja)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaBaja)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaInicioDescuento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaInicioDescuento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaFinDescuento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaFinDescuento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.smdv)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.smdv)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.sdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.sd)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sd)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.vsm)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.vsm)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.porcentaje)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.porcentaje)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cuotaFija)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cuotaFija)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.descuentoBimestral)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.descuentoBimestral)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.descuentoMensual)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.descuentoMensual)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.descuentoSemanal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.descuentoSemanal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.descuentoCatorcenal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.descuentoCatorcenal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.descuentoQuincenal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.descuentoQuincenal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.descuentoVeintiochonal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.descuentoVeintiochonal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.descuentoDiario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.descuentoDiario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.acuseRetencion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.acuseRetencion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Patrone.registro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Patrone.registro)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Plaza.descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Plaza.descripcion)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,106 @@
+﻿@model IEnumerable<SUADATOS.Factore>
+
+@{
+    ViewBag.Title = Language.factores;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (!WebSecurity.IsAuthenticated)
+    {
+        Response.Redirect("~/Home/Index");
+    }
+    
+}
+@section Menu {
+    <div>@Language.factores<img src="~/Content/Images/people-b.png" width="15" height="15" /></div>
+}
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.anosTrabajados)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.diasVacaciones)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.primaVacacional)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.porcentaje)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.diasAno)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.factorVacaciones)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.aguinaldo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.diasAnoAguinaldo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.factor)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.factorIntegracion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fechaRegistro)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Usuario.nombreUsuario)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.anosTrabajados)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.diasVacaciones)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.primaVacacional)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.porcentaje)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.diasAno)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.factorVacaciones)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.aguinaldo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.diasAnoAguinaldo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.factor)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.factorIntegracion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fechaRegistro)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Usuario.nombreUsuario)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>

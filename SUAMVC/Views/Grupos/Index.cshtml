@@ -1,0 +1,40 @@
+﻿@model IEnumerable<SUADATOS.Grupos>
+
+@{
+    ViewBag.Title = "Grupos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (!WebSecurity.IsAuthenticated)
+    {
+        Response.Redirect("~/Home/Index");
+    }
+    var grid = new WebGrid(source: Model, rowsPerPage: 10);
+}
+
+@section Menu {
+<div>Catalogo de Grupos <img src="~/Content/Images/people-b.png" width="15" height="15" /></div>
+}
+
+
+@grid.GetHtml(
+    columns:
+        grid.Columns(
+            grid.Column("claveGrupo", "Clave Grupo", null, null, true),
+            grid.Column("nombre", "Nombre", null, null, true),
+            grid.Column("nombreCorto", "Nombre Corto", null, null, true),
+            grid.Column("Plaza.cveCorta", "Plaza", null, null, true) ,
+
+            grid.Column("posicion", "Posicion", null, null, true),
+            grid.Column(header: "Consultar", format: @<text><a href="@Url.Action("Details", "Grupos", new { id = item.id })">
+                    <img src="~/Content/Images/edit.png" alt="" style="border:none;" class="icon" />
+                </a></text>),
+            grid.Column(header: "Editar", format: @<text><a href="@Url.Action("Edit", "Grupos", new { id = item.id })">
+                    <img src="~/Content/Images/edit.png" alt="" style="border:none;" class="icon" />
+                </a></text>),
+            grid.Column(header: "Eliminar", format: @<text><a href="@Url.Action("Delete", "Grupos", new { id = item.id })">
+                    <img src="~/Content/Images/delete.png" alt="" style="border:none;" class="icon" />
+                </a></text>)),
+                                        tableStyle: "table table-striped tableSua"
+                        )
+<p>
+    @Html.ActionLink("Crear Grupo", "Create", "Grupos", new { @class = "btn btn-success" })
+</p>

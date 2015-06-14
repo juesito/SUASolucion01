@@ -1,0 +1,66 @@
+﻿@model IEnumerable<SUADATOS.Patrone>
+@using System.Text;
+@using SUAMVC.Models
+@using SUADATOS;
+
+@{
+    if (!WebSecurity.IsAuthenticated)
+    {
+        Response.Redirect("~/Home/Index");
+    }
+    Usuario usuario = Session["UsuarioData"] as Usuario;
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var grid = new WebGrid(source: Model, canPage: false);
+
+    var tableHtml = string.Empty;
+    var sb = new StringBuilder();
+
+    //Creamos una lista de columnas
+    var gridColumns = new List<WebGridColumn>();
+    gridColumns.Add(grid.Column("registro", "Registro Patronal", @<text><div style='width: 8em'>@item.registro</div></text> , null, canSort: true));
+    gridColumns.Add(grid.Column("Plaza.cvecorta", "ID Plaza", @<text><div style='width: 4em'>@item.Plaza.cvecorta</div></text> , null, canSort: true));
+    gridColumns.Add(grid.Column("rfc", "RFC", @<text><div style='width: 9em'>@item.rfc</div></text> , null, canSort: true));
+    gridColumns.Add(grid.Column("nombre", "Nombre", @<text><div style='width: 32em'>@item.nombre</div></text> , null, canSort: true));
+    gridColumns.Add(grid.Column("telefono", "Teléfono", @<text><div style='width: 7em'>@item.telefono</div></text> , null, canSort: true));
+    gridColumns.Add(grid.Column("domicilio", "Domicilio", @<text><div style='width: 31em'>@item.domicilio</div></text> , null, canSort: true));
+    gridColumns.Add(grid.Column("zona", "Zona", null, null, true));
+    gridColumns.Add(grid.Column("inicioAfiliacion", "Ini.Afiliación", null, null, true));
+    gridColumns.Add(grid.Column("STyPS", "STyPS", null, null, true));
+    gridColumns.Add(grid.Column("carEnt", "Entidad", null, null, true));
+    gridColumns.Add(grid.Column("carDel", "Delegación", null, null, true));
+    gridColumns.Add(grid.Column("codigoPostal", "C. P.", @<text><div style='width: 5em'>@item.codigoPostal</div></text> , null, canSort: true));
+    gridColumns.Add(grid.Column("direccionArchivo", "Carpeta", null, null, true));
+    gridColumns.Add(grid.Column(header: "Editar", format: @<text><a href="@Url.Action("Edit", "Patrones", new { id = item.id })"><img src="~/Content/Images/edit.png" alt="" style="border:none;" class="icon" /></a></text>));
+
+    if (SecurityUserModel.verificarPermiso("Patrones", "Consultar detalle"))
+    { 
+        gridColumns.Add(grid.Column(header: "Detalle", format: @<text><a href="@Url.Action("Details", "Patrones", new { id = item.id })"><img src="~/Content/Images/list.png" alt="" style="border:none;" class="icon" /></a></text>));
+    }
+
+    sb.Append(grid.GetHtml(
+        columns: grid.Columns(gridColumns.ToArray()),
+                        tableStyle: "table table-striped tableSua"
+                    ));
+
+    tableHtml = sb.ToString().Trim();                                                                                                                                                                                                                             
+
+}
+
+@section Menu {
+    <div>@Language.catde @Language.patron <img src="~/Content/Images/boss.png" width="15" height="15" /></div>
+}
+@using (Html.BeginForm())
+{
+    <p>
+        @Language.plaza: @Html.plazasDrownList(usuario.Id)
+    </p>
+}
+
+@if (!tableHtml.IsEmpty())
+{
+    @Html.Raw(tableHtml)
+}
+
+
+

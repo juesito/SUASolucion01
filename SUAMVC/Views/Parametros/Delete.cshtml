@@ -1,0 +1,79 @@
+﻿@model SUADATOS.Parametro
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (!WebSecurity.IsAuthenticated)
+    {
+        Response.Redirect("~/Home/Index");
+    }
+}
+
+@section Menu {
+    <div>Borrar Parametro <img src="~/Content/Images/home.png" width="15" height="15" /></div>
+}
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Parametro</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.parametroId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.parametroId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.valorString)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.valorString)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.valorMoneda)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.valorMoneda)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.valorFecha)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.valorFecha)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

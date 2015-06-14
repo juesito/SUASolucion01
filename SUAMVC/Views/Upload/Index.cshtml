@@ -1,0 +1,50 @@
+﻿@using Microsoft.Web.Helpers;
+@{
+    ViewBag.Title = "Carga de SUA BD";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var message = @TempData["viewMessage"];
+    var isError = TempData["error"];
+}
+@section Menu {
+    <div>Actualizar Patrones - Archivo SUA <img src="~/Content/Images/home.png" width="15" height="15" /></div>
+}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        Cargar o actualizar los patrones a partir de un archivo SUA
+    </div>
+    <div class="panel-body">
+        
+        @using (@Html.BeginForm("Upload", "Upload", FormMethod.Post,
+            new { enctype = "multipart/form-data" }))
+        {
+            if (!IsPost)
+            {
+
+    <div class="file">
+        @FileUpload.GetHtml(initialNumberOfFiles: 1,
+                allowMoreFilesToBeAdded: false,
+                includeFormTag: true,
+                uploadText: "Subir SUA.mdb")
+    </div>
+
+            }
+            else
+            {
+                <h1>Cargado</h1>
+            }
+
+        }
+    </div>
+    @if (isError != null)
+    {
+        if (isError.Equals(false))
+        {
+            <p><span class="label label-success">@message</span></p>
+        }
+        else
+        {
+            <p><span class="label label-danger">@message</span></p>
+        }
+    }
+</div>
+

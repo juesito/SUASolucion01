@@ -1,0 +1,40 @@
+﻿@model SUADATOS.MovimientosAsegurado
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Menu {
+    <div>Borrar Movimiento <img src="~/Content/Images/home.png" width="15" height="15" /></div>
+}
+
+<h3>Confirmación para eliminar</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Movimiento:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.catalogoMovimiento.descripcion)
+        </dd>
+
+        <dt>
+            Fecha:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.catalogoMovimiento.fechaCreacion)
+        </dd>
+
+    </dl>
+
+    @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        @Html.ActionLink("Eliminar", "DeleteMov", new { id = Model.id }, new { @class = "btn btn-success" })
+        @Html.ActionLink("Regresar", "Details", new { id = Model.aseguradoId })
+    </div>
+</div>

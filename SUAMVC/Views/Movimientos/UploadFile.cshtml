@@ -1,0 +1,125 @@
+﻿@model SUADATOS.Movimiento
+
+@{
+    ViewBag.Title = "UploadFile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (!WebSecurity.IsAuthenticated)
+    {
+        Response.Redirect("~/Home/Index");
+    }
+}
+
+@section Menu {
+    <div>Catalogo Asegurado (PDF) <img src="~/Content/Images/people-b.png" width="15" height="15" /></div>
+}
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        Cargar archivo para asegurados
+    </div>
+    <div class="panel-body">
+        @using (@Html.BeginForm("UploadPDFFile", "Movimientos", FormMethod.Post,
+            new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            if (!IsPost)
+            {
+                @Html.Hidden("aseguradoId", Model.aseguradoId)
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                No. Lote IDSE:
+                            </td>
+                            <td>
+                                @Html.EditorFor(model => model.lote)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Fecha Transacción:
+                            </td>
+                            <td>
+                                @Html.EditorFor(model => model.fechaTransaccion, new { htmlAttributes = new { @class = "myDate" } })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Archivo Imagen:
+                            </td>
+                            <td>
+                                @FileUpload.GetHtml(initialNumberOfFiles: 1,
+                allowMoreFilesToBeAdded: false,
+                includeFormTag: true,
+                uploadText: "Guardar PDF")
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br />
+                <br />
+                <div>
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>
+                                    Num. Afil
+                                </th>
+                                <th>
+                                    Nombre
+                                </th>
+                                <th>
+                                    Alta
+                                </th>
+                                <th>
+                                    Baja
+                                </th>
+                                <th>
+                                    Modificación
+                                </th>
+                                <th>
+                                    Autorización permanente
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(model => model.Asegurado.numeroAfiliacion)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => model.Asegurado.nombreTemporal)
+                                </td>
+                                <td style="text-align:center;">
+                                    @Html.RadioButtonFor(model => model.tipo, "A")
+                                </td>
+                                <td style="text-align:center;">
+                                    @Html.RadioButtonFor(model => model.tipo, "B")
+                                </td>
+                                <td style="text-align:center;">
+                                    @Html.RadioButtonFor(model => model.tipo, "M")
+                                </td>
+                                <td style="text-align:center;">
+                                    @Html.RadioButtonFor(model => model.tipo, "P")
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+            }
+            else
+            {
+                <h1>Cargado</h1>
+            }
+
+        }
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Regresar", "Index", "Asegurados")
+</div>

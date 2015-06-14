@@ -1,0 +1,36 @@
+﻿@{
+    var menusList = Session["menuList"] as IEnumerable<SUAMVC.Models.Menu>;
+
+}
+
+@if (menusList != null)
+{
+    <div class="navbar-header">
+        <div class="btn-group" role="group" aria-label="...">
+            <button type="button" class="btn btn-default">@Html.ActionLink("Home", "Home", "Home")</button>
+            @foreach (var modulo in menusList)
+            {
+                <div class="btn-group" role="group">
+
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        @modulo.Name
+                        <span class="caret"></span>
+                    </button>
+                    @if (modulo.MenuItems.Count > 0)
+                    {
+                        <ul class="dropdown-menu" role="menu">
+                            @foreach (var funcion in modulo.MenuItems)
+                            {
+                                <li>@Html.ActionLink(funcion.Name, funcion.ActionName, funcion.ControllerName)</li>
+
+                            }
+                        </ul>
+                    }
+                </div>
+            }
+        </div>
+
+    </div>
+}
+
+

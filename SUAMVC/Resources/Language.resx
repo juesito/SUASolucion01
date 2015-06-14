@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="bt_cancel" xml:space="preserve">
+    <value>Cancelar</value>
+    <comment>botón con acción de cancelar</comment>
+  </data>
+  <data name="bt_login" xml:space="preserve">
+    <value>Ingresar</value>
+    <comment>Botón para ingresar a la app</comment>
+  </data>
+  <data name="Home_Title" xml:space="preserve">
+    <value>SIAP Web Site</value>
+    <comment>Titulo principal de la aplicación</comment>
+  </data>
+  <data name="apellidoMaterno" xml:space="preserve">
+    <value>Apellido Materno</value>
+    <comment>Etiqueta del apellido materno</comment>
+  </data>
+  <data name="apellidoPaterno" xml:space="preserve">
+    <value>Apellido Paterno</value>
+    <comment>Etiqueta del apellido paterno</comment>
+  </data>
+  <data name="bt_exit" xml:space="preserve">
+    <value>Salir</value>
+    <comment>Botón para salir</comment>
+  </data>
+  <data name="bt_register" xml:space="preserve">
+    <value>Registrarse</value>
+    <comment>Botón para registrarse</comment>
+  </data>
+  <data name="company_name" xml:space="preserve">
+    <value>SIAP</value>
+    <comment>Nombre de la compañia</comment>
+  </data>
+  <data name="company_subtitle" xml:space="preserve">
+    <value>IMSS 3.0</value>
+    <comment>Subtitulo de la compañia</comment>
+  </data>
+  <data name="curp" xml:space="preserve">
+    <value>CURP</value>
+    <comment>Etiqueta del CURP</comment>
+  </data>
+  <data name="failed_login" xml:space="preserve">
+    <value>Error al intentar ingresar al SIAP</value>
+    <comment>Mensaje de error de entrada</comment>
+  </data>
+  <data name="fechaAlta" xml:space="preserve">
+    <value>Fecha Alta</value>
+    <comment>Etiqueta de la fecha de alta</comment>
+  </data>
+  <data name="fechaBaja" xml:space="preserve">
+    <value>Fecha Baja</value>
+    <comment>Etiqueta de la fechade baja</comment>
+  </data>
+  <data name="footer_title" xml:space="preserve">
+    <value>- SIAP Sistema de Administración de Personal IMSS</value>
+    <comment>pie de pagina del sistema</comment>
+  </data>
+  <data name="grupo" xml:space="preserve">
+    <value>Grupo</value>
+    <comment>Etiqueta del Grupo</comment>
+  </data>
+  <data name="noAfiliacion" xml:space="preserve">
+    <value>No. Afiliacion</value>
+    <comment>Etiqueta No de Afiliacion</comment>
+  </data>
+  <data name="noCredito" xml:space="preserve">
+    <value>No. Credito</value>
+    <comment>Etiqueta No. de Credito</comment>
+  </data>
+  <data name="nombre" xml:space="preserve">
+    <value>Nombre(s)</value>
+    <comment>Etiqueta del nombre de la persona</comment>
+  </data>
+  <data name="nombreCompleto" xml:space="preserve">
+    <value>Nombre Completo</value>
+    <comment>Etiqueta del nombre completo de la persona</comment>
+  </data>
+  <data name="ocupacion" xml:space="preserve">
+    <value>Ocupación</value>
+    <comment>Etiqueta de la Ocupación</comment>
+  </data>
+  <data name="registroPatronal" xml:space="preserve">
+    <value>Registro Patronal</value>
+    <comment>Titulo para tabla de registro patronal</comment>
+  </data>
+  <data name="rfc" xml:space="preserve">
+    <value>RFC</value>
+    <comment>Etiqueta del RFC</comment>
+  </data>
+  <data name="ubicacion" xml:space="preserve">
+    <value>Ubicación</value>
+    <comment>Etiqueta de la Ubicación</comment>
+  </data>
+  <data name="accion" xml:space="preserve">
+    <value>Acción</value>
+    <comment>Etiqueta para acción</comment>
+  </data>
+  <data name="acreditados" xml:space="preserve">
+    <value>Acreditados</value>
+    <comment>Etiqueta para Acreditados</comment>
+  </data>
+  <data name="avisoRet" xml:space="preserve">
+    <value>Aviso Ret.</value>
+    <comment>Etiqueta para aviso de retención</comment>
+  </data>
+  <data name="catde" xml:space="preserve">
+    <value>Catalogo de</value>
+    <comment>Etiqueta para Catalogo de</comment>
+  </data>
+  <data name="cliente" xml:space="preserve">
+    <value>Cliente</value>
+    <comment>Etiqueta para Cliente</comment>
+  </data>
+  <data name="criterio" xml:space="preserve">
+    <value>Criterio</value>
+    <comment>Etiqueta para Criterio</comment>
+  </data>
+  <data name="cuotaFija" xml:space="preserve">
+    <value>Cuota Fija</value>
+    <comment>Etiqueta para la cuota fija</comment>
+  </data>
+  <data name="descBimestral" xml:space="preserve">
+    <value>Desc. Bimestral</value>
+    <comment>Etiqueta para descuento bimestral</comment>
+  </data>
+  <data name="descCatorcenal" xml:space="preserve">
+    <value>Desc. Catorcenal</value>
+    <comment>Etiqueta para descuento Catorcenal</comment>
+  </data>
+  <data name="descDiario" xml:space="preserve">
+    <value>Desc. Diario</value>
+    <comment>Etiqueta para descuento Diario</comment>
+  </data>
+  <data name="descMensual" xml:space="preserve">
+    <value>Desc. Mensual</value>
+    <comment>Etiqueta para descuento Mensual</comment>
+  </data>
+  <data name="descQuincenal" xml:space="preserve">
+    <value>Desc. Quincenal</value>
+    <comment>Etiqueta para descuento Quincenal</comment>
+  </data>
+  <data name="descripcion" xml:space="preserve">
+    <value>Descripción</value>
+    <comment>Etiqueta para la descripción</comment>
+  </data>
+  <data name="descSemanal" xml:space="preserve">
+    <value>Desc. Semanal</value>
+    <comment>Etiqueta para descuento Semanal</comment>
+  </data>
+  <data name="descVeintiocho" xml:space="preserve">
+    <value>Desc. Veintiochonal</value>
+    <comment>Etiqueta para descuento Ventiochonal</comment>
+  </data>
+  <data name="fFinDescuento" xml:space="preserve">
+    <value>F. Fin Desc.</value>
+    <comment>Etiqueta fecha fin de descuento</comment>
+  </data>
+  <data name="fInicioDescuento" xml:space="preserve">
+    <value>F.Ini.Desc.</value>
+    <comment>Etiqueta fecha inicio de descuento</comment>
+  </data>
+  <data name="patron" xml:space="preserve">
+    <value>Patrón</value>
+    <comment>Etiqueta para Patrón</comment>
+  </data>
+  <data name="plaza" xml:space="preserve">
+    <value>Plaza</value>
+    <comment>Etiqueta para la plaza</comment>
+  </data>
+  <data name="porcentaje" xml:space="preserve">
+    <value>Porcentaje</value>
+    <comment>Etiqueta para porcentaje</comment>
+  </data>
+  <data name="registros" xml:space="preserve">
+    <value>Registros</value>
+    <comment>Etiqueta para Registros</comment>
+  </data>
+  <data name="sd" xml:space="preserve">
+    <value>SD</value>
+    <comment>Etiqueta SD</comment>
+  </data>
+  <data name="sdi" xml:space="preserve">
+    <value>SDI</value>
+    <comment>Etiqueta SDI</comment>
+  </data>
+  <data name="smdf" xml:space="preserve">
+    <value>SMDF</value>
+    <comment>Etiqueta Salario Minimo DF</comment>
+  </data>
+  <data name="valor" xml:space="preserve">
+    <value>Valor</value>
+    <comment>Etiqueta para Valor</comment>
+  </data>
+  <data name="vsm" xml:space="preserve">
+    <value>VSM</value>
+    <comment>Etiqueta para Veces Salario Minimo</comment>
+  </data>
+  <data name="advanceSearch" xml:space="preserve">
+    <value>Busqueda Avanzada</value>
+    <comment>Etiqueta para busqueda avanzada</comment>
+  </data>
+  <data name="toExcel" xml:space="preserve">
+    <value>Exportar a Excel</value>
+    <comment>Etiqueta para exportar a excel</comment>
+  </data>
+  <data name="consulta" xml:space="preserve">
+    <value>Consultar</value>
+    <comment>Etiqueta para consultar</comment>
+  </data>
+  <data name="subirAcuseMax" xml:space="preserve">
+    <value>Subir Acuse Masivo</value>
+    <comment>Etiqueta para subir acuses de forma masiva</comment>
+  </data>
+  <data name="agregar" xml:space="preserve">
+    <value>Agregar</value>
+    <comment>Etiqueta para agregar</comment>
+  </data>
+  <data name="borrar" xml:space="preserve">
+    <value>Borrar</value>
+    <comment>Etiqueta para borrar</comment>
+  </data>
+  <data name="detallesDe" xml:space="preserve">
+    <value>Detalles de</value>
+    <comment>Etiquetas para detalles de</comment>
+  </data>
+  <data name="factores" xml:space="preserve">
+    <value>Factores</value>
+    <comment>Etiqueta para Factores</comment>
+  </data>
+  <data name="funciones" xml:space="preserve">
+    <value>Funciones</value>
+    <comment>Etiqueta para funciones</comment>
+  </data>
+  <data name="modificar" xml:space="preserve">
+    <value>Modificar</value>
+    <comment>Etiqueta para modificar</comment>
+  </data>
+</root>

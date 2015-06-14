@@ -1,0 +1,40 @@
+﻿@model SUADATOS.Asegurado
+
+@{
+    ViewBag.Title = "UploadFile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        Cargar archivo para asegurados
+    </div>
+    <div class="panel-body">
+        @using (@Html.BeginForm("UploadPDFFile", "Asegurados", FormMethod.Post,
+            new { enctype = "multipart/form-data" }))
+        {
+            if (!IsPost)
+            {
+                @Html.EditorFor(model => model.id, new { htmlAttributes = new { @class = "form-control" } })
+                <p>Subir Archivo:</p>
+                @Html.DropDownList("answer", new SelectList(new string[] { "Alta", "Baja", "Modificacion", "Permanente" }))
+                <br />
+                <div class="file">
+                    @FileUpload.GetHtml(initialNumberOfFiles: 1,
+                allowMoreFilesToBeAdded: false,
+                includeFormTag: true,
+                uploadText: "Guardar PDF")
+                </div>
+
+            }
+            else
+            {
+                <h1>Cargado</h1>
+            }
+
+        }
+    </div>
+</div>
+<div>
+    @Html.ActionLink("A Asegurados", "Index")
+</div>

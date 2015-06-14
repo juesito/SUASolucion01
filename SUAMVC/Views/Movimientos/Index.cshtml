@@ -1,0 +1,33 @@
+﻿@model IEnumerable<SUADATOS.Movimiento>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (!WebSecurity.IsAuthenticated)
+    {
+        Response.Redirect("~/Home/Index");
+    }
+    var grid = new WebGrid(source: Model, rowsPerPage: 10);
+}
+
+@section Menu {
+    <div>Movimientos <img src="~/Content/Images/people-b.png" width="15" height="15" /></div>
+}
+
+
+@grid.GetHtml(
+    columns:
+        grid.Columns(
+            grid.Column("Asegurado.numeroAfiliacion", "Asegurado", format: @<text> @if (@item.aseguradoId != null)
+            {@item.Asegurado.numeroAfiliacion}</text>, canSort: true),
+            grid.Column("Acreditado.numeroAfiliacion", "Acreditado",  format: @<text> @if (@item.acreditadoId != null)
+            {@item.Acreditado.numeroAfiliacion}</text>, canSort: true),
+            grid.Column("lote", "Lote", null, null, true),
+            grid.Column("fechaTransaccion", "Fecha Transacción", null, null, true),
+            grid.Column("tipo", "Tipo", null, null, true),
+            grid.Column("nombreArchivo", "Nombre archivo", null, null, true),
+            grid.Column(header: "Eliminar", format: @<text><a href="@Url.Action("Delete", "Movimientos", new { id = item.id })">
+                    <img src="~/Content/Images/delete.png" alt="" style="border:none;" class="icon" />
+                </a></text>)),
+                                                tableStyle: "table table-striped tableSua"
+                                )

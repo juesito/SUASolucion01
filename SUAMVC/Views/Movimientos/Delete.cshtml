@@ -1,0 +1,71 @@
+﻿@model SUADATOS.Movimiento
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (!WebSecurity.IsAuthenticated)
+    {
+        Response.Redirect("~/Home/Index");
+    }
+}
+
+@section Menu {
+    <div><img src="~/Content/Images/people-b.png" width="15" height="15" /> Eliminar Grupo </div>
+}
+
+<h3>Confirmación para eliminar el Movimiento </h3>
+  
+<div>
+    <hr />
+     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.lote)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.lote)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaTransaccion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaTransaccion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tipo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tipo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nombreArchivo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombreArchivo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Asegurado.numeroAfiliacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Asegurado.numeroAfiliacion)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-success" /> |
+            @Html.ActionLink("Regresar", "Index")
+        </div>
+    }
+</div>

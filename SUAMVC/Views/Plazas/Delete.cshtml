@@ -1,0 +1,52 @@
+﻿@model SUADATOS.Plaza
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (!WebSecurity.IsAuthenticated)
+    {
+        Response.Redirect("~/Home/Index");
+    }
+}
+
+@section Menu {
+    <div><img src="~/Content/Images/people-b.png" width="15" height="15" /> Borrar Plaza </div>
+}
+
+<h3>Confirmación para eliminar la plaza</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+ 
+        <dt>
+            @Html.DisplayNameFor(model => model.cvecorta)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.cvecorta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.descripcion)
+        </dt>
+       <dd>
+            @Html.DisplayFor(model => model.descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.indicador)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.indicador)
+        </dd>
+
+     </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Eliminar" class="btn btn-success" /> |
+            @Html.ActionLink("Regresar", "Index")
+        </div>
+    }
+</div>

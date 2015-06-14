@@ -1,0 +1,106 @@
+﻿@model SUADATOS.Movimiento
+
+@{
+    ViewBag.Title = "UploadFileAcre";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (!WebSecurity.IsAuthenticated)
+    {
+        Response.Redirect("~/Home/Index");
+    }
+}
+
+@section Menu {
+    <div>Catalogo Acreditados (PDF) <img src="~/Content/Images/people-b.png" width="15" height="15" /></div>
+}
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        Cargar archivo para Acreditados
+    </div>
+    <div class="panel-body">
+        @using (@Html.BeginForm("UploadPDFFileAcre", "Movimientos", FormMethod.Post,
+            new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            if (!IsPost)
+            {
+                @Html.Hidden("acreditadoId", Model.acreditadoId)
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                No. Lote IDSE:
+                            </td>
+                            <td>
+                                @Html.EditorFor(model => model.lote)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Fecha Transacción:
+                            </td>
+                            <td>
+                                @Html.EditorFor(model => model.fechaTransaccion, new { htmlAttributes = new { @class = "myDate" } })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Archivo Imagen:
+                            </td>
+                            <td>
+                                @FileUpload.GetHtml(initialNumberOfFiles: 1,
+                allowMoreFilesToBeAdded: false,
+                includeFormTag: true,
+                uploadText: "Guardar PDF")
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br />
+                <br />
+                <div>
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>
+                                    Num. Afil
+                                </th>
+                                <th>
+                                    Nombre
+                                </th>
+                               <th>
+                                    Aviso Retensión
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(model => model.Acreditado.numeroAfiliacion)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => model.Acreditado.nombreCompleto)
+                                </td>
+                                <td style="text-align:center;">
+                                    @Html.RadioButtonFor(model => model.tipo, "A")
+                                </td>
+                             </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+            }
+            else
+            {
+                <h1>Cargado</h1>
+            }
+
+        }
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Regresar", "Index", "Acreditados")
+</div>

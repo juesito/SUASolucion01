@@ -1,0 +1,224 @@
+﻿@model IEnumerable<SUADATOS.Acreditado>
+@using SUADATOS
+@using SUAMVC.Models
+@using System.Text;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    if (!WebSecurity.IsAuthenticated)
+    {
+        Response.Redirect("~/Home/Index");
+    }
+    ViewBag.Title = "Acreditado";
+    var buscar = "0";
+    if (TempData["buscador"] != null)
+    {
+        buscar = TempData["buscador"] as String;
+    }
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var grid = new WebGrid(source: Model, rowsPerPage: 12);
+    @functions {
+        static IHtmlString ShowPDF(string id)
+        {
+            return id != null ? new HtmlString("<img src=\"/Content/Images/pdf.gif\" class=\"icon\" />") : null;
+        }
+    }
+
+    var tableHtml = string.Empty;
+    var sb = new StringBuilder();
+
+    //Creamos una lista de columnas
+    var gridColumns = new List<WebGridColumn>();
+    gridColumns.Add(grid.Column("Patrone.registro", Language.registroPatronal, null, null, true));
+    gridColumns.Add(grid.Column("apellidoPaterno", Language.apellidoPaterno, null, null, true));
+    gridColumns.Add(grid.Column("apellidoMaterno", Language.apellidoMaterno, null, null, true));
+    gridColumns.Add(grid.Column("nombre", Language.nombre,  @<text><div style='width: 15em'>@item.nombre</div></text> , null, canSort: true));
+    gridColumns.Add(grid.Column("nombreCompleto", Language.nombreCompleto, @<text><div style='width: 25em'>@item.nombrecompleto</div></text> , null, canSort: true));
+    gridColumns.Add(grid.Column("curp", Language.curp, null, null, true));
+    gridColumns.Add(grid.Column("rfc", Language.rfc, null, null, true));
+    gridColumns.Add(grid.Column("Cliente.claveCliente", Language.ubicacion, format: @<text> @if (@item.Cliente != null)
+    {@item.Cliente.claveCliente}</text>, canSort: true));
+    gridColumns.Add(grid.Column("ocupacion", Language.ocupacion, @<text><div style='width: 12em'>@item.ocupacion </div></text>, null, canSort: true));
+    gridColumns.Add(grid.Column("Cliente.Grupos.nombreCorto", Language.grupo, format: @<text> @if (@item.Cliente != null)
+    {@item.Cliente.Grupos.nombreCorto}</text>, canSort: true));
+    gridColumns.Add(grid.Column("numeroAfiliacion", Language.noAfiliacion, null, null, true));
+    gridColumns.Add(grid.Column("numeroCredito", Language.noCredito, null, null, true));
+    gridColumns.Add(grid.Column("fechaAlta", Language.fechaAlta, @<text><div style='width: 6em'>@item.fechaAlta.ToString("dd-MM-yyyy")</div></text>, null, canSort: true));
+    gridColumns.Add(grid.Column("fechaBaja", Language.fechaBaja, @<text><div style='width: 6em'>
+            @if (@item.fechaBaja != null)
+            { @item.fechaBaja.ToString("dd-MM-yyyy")}
+        </div></text>, null, canSort: true));
+    gridColumns.Add(grid.Column("fechaInicioDescuento", Language.fInicioDescuento, @<text><div style='width: 6em'>
+                @if (@item.fechaInicioDescuento != null)
+                { @item.fechaInicioDescuento.ToString("dd-MM-yyyy") }
+            </div></text>, canSort: true));
+    gridColumns.Add(grid.Column("fechaFinDescuento", Language.fFinDescuento, format: @<text><div style='width: 6em'>
+                    @if (@item.fechaFinDescuento != null)
+                    {@item.fechaFinDescuento.ToString("dd-MM-yyyy")}
+                </div></text>, canSort: true));
+    gridColumns.Add(grid.Column("smdv", Language.smdf, format: @<text>@item.smdv.ToString("0.00")</text>, canSort: true));
+    gridColumns.Add(grid.Column("sdi", Language.sdi, format: @<text>@item.sdi.ToString("0.00")</text>, canSort: true));
+    gridColumns.Add(grid.Column("sd", Language.sd, format: @<text> @item.sd.ToString("0.00")</text>, canSort: true));
+    gridColumns.Add(grid.Column("vsm", Language.vsm, format: @<text>@item.vsm.ToString("0.0000")</text>, canSort: true));
+    gridColumns.Add(grid.Column("porcentaje", Language.porcentaje, format: @<text>@item.porcentaje.ToString("% 0.00")</text>, canSort: true));
+    gridColumns.Add(grid.Column("cuotaFija", Language.cuotaFija, format: @<text>@item.cuotaFija.ToString("0,000.00")</text>, canSort: true));
+    gridColumns.Add(grid.Column("descuentoBimestral", Language.descBimestral, format: @<text>@item.descuentoBimestral.ToString("0,000.00")</text>, canSort: true));
+    gridColumns.Add(grid.Column("descuentoMensual", Language.descMensual, format: @<text>@item.descuentoMensual.ToString("000.00")</text>, canSort: true));
+    gridColumns.Add(grid.Column("descuentoSemanal", Language.descSemanal, format: @<text>@item.descuentoSemanal.ToString("000.00")</text>, canSort: true));
+    gridColumns.Add(grid.Column("descuentoCatorcenal", Language.descCatorcenal, format: @<text>@item.descuentoCatorcenal.ToString("000.00")</text>, canSort: true));
+    gridColumns.Add(grid.Column("descuentoQuincenal", Language.descQuincenal, format: @<text>@item.descuentoQuincenal.ToString("000.00")</text>, canSort: true));
+    gridColumns.Add(grid.Column("descuentoVeintiochonal", Language.descVeintiocho, format: @<text>@item.descuentoVeintiochonal.ToString("000.00")</text>, canSort: true));
+    gridColumns.Add(grid.Column("descuentoDiario", Language.descDiario, format: @<text>@item.descuentoDiario.ToString("0.00")</text>, canSort: true));
+    gridColumns.Add(grid.Column("Patrone.Plaza.cveCorta", Language.plaza, null, null, true));
+    gridColumns.Add(grid.Column(header: Language.avisoRet, format:@<text><a href="@Url.Action("ViewAttachment", "Acreditados", new { id = item.id, option = "A", carga = item.alta })" target="_blank">@ShowPDF(item.alta)</a></text>));
+
+    if (SecurityUserModel.verificarPermiso("Acreditados", "Subir acuse"))
+    {
+        gridColumns.Add(grid.Column(header: Language.accion, format: @<text><a href="@Url.Action("UploadFileAcre", "Movimientos", new { id = item.id })"><img src="~/Content/Images/upload-blue.png" alt="" style="border:none;" class="icon" /></a></text>));
+    }
+
+    sb.Append(grid.GetHtml(
+    columns:
+        grid.Columns(gridColumns.ToArray()),
+      tableStyle: "table table-striped tableSua"
+      ));
+
+    tableHtml = sb.ToString().Trim();
+}
+
+@section Menu {
+    <div>@Language.catde @Language.acreditados<img src="~/Content/Images/people-b.png" width="15" height="15" /></div>
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Get))
+{
+
+    //MarqueeFilter - Todos los filtros principales
+    <div class="marqueeFilter">
+        <table style="float:left; margin-top:5px;display:inline-block;">
+            <thead>
+                <tr style="text-align:left;vertical-align:bottom;">
+                    <td style="padding-top:15px">
+                        <b>@Language.plaza:</b>
+                    </td>
+                    <td>
+                        @Html.DropDownList("plazasId", "Seleccione")
+                    </td>
+                    <td>
+                        <b>@Language.patron:</b>
+                    </td>
+                    <td>
+                        @Html.DropDownList("patronesId", "Seleccione")
+                    </td>
+                    <td>
+                        <b>@Language.grupo:</b>
+                    </td>
+                    <td>
+                        @Html.DropDownList("gruposId", "Seleccione")
+                    </td>
+                    <td>
+                        <b>@Language.cliente:</b>
+                    </td>
+                    <td>
+                        @Html.DropDownList("clientesId", "Seleccione")
+                    </td>
+                </tr>
+            </thead>
+        </table>
+
+        <table style="margin-left:20px; margin-top:10px; float:left;">
+            <thead>
+                <tr>
+                    <td rowspan="2" style="padding-left:15px">
+                        <input type="submit" value="Consultar" class="btn btn-success" style="width:80px; height:30px; font-size:10px;" />
+                    </td>
+                    <td style="padding-right:10px; padding-left:10px" rowspan="2">
+                        @if (SecurityUserModel.verificarPermiso("Acreditados", "Descargar excel"))
+                        {
+                            <a href="@Url.Action("GetExcel", "Acreditados", new{ plazasId = @ViewBag.pzaId, patronesId = @ViewBag.patId,
+                                                                                 clientesId = @ViewBag.cteId,
+                                                                                 gruposId = @ViewBag.gpoId,
+                                                                                 opcion = @ViewBag.opBuscador,
+                                                                                 valor = @ViewBag.valBuscador,
+                                                                                 statusId = @ViewBag.statusId
+                                })" style="text-align:right">
+                                <img src="~/Content/Images/xls.png" title="@Language.toExcel" alt="@Language.toExcel" style="border:none;" width="30" height="30" />
+                            </a>
+                        }
+                    </td>
+
+            </thead>
+        </table>
+
+        <div>
+            <table style="margin-left:20px; margin-top:10px; ">
+                <thead>
+                    <tr>
+                        <td style="padding-right:10px;" rowspan="2">
+                            <a href="@Url.Action("ActivaVariable", "Acreditados", new
+                            {
+                                buscador = @TempData["buscador"], plazasId = @ViewBag.pzaId, patronesId = @ViewBag.patId,
+                                clientesId = @ViewBag.cteId, gruposId = @ViewBag.gpoId, opcion = @ViewBag.opBuscador,
+                                valor = @ViewBag.valBuscador
+                            })">
+                                @if (buscar.Equals("1"))
+                                {
+                                    <img src="~/Content/Images/hide.png" alt="@Language.advanceSearch"
+                                         title="@Language.advanceSearch" style="border:none;" width="30" height="25" />
+                                }
+                                else
+                                {
+                                    <img src="~/Content/Images/show.png" alt="@Language.advanceSearch"
+                                         title="@Language.advanceSearch" style="border:none;" width="30" height="25" />
+
+                                }
+                            </a>
+                        </td>
+                        @if (buscar.Equals("1"))
+                        {
+                            <td><b>@Language.criterio</b></td>
+                            <td>@Html.FieldsAvailablesToFilterAcreditados()</td>
+                            <td>@Html.Label("valor", Language.valor)</td>
+                            <td>@Html.TextBox("valor")</td>
+                        }
+                    </tr>
+                </thead>
+            </table>
+        </div>
+
+
+    </div>
+
+
+                        //Etiqueta de No. de registros
+                        if (ViewBag.registros != null)
+                        {
+                            <div style="column-span:inherit; height:20px; font-size:10px; text-align:center; padding-top:10px">
+                                <div style="margin-right:4px;display:inline-block;vertical-align:top;">
+                                    <p style="font-weight:bold">Registros: @Html.Label(Language.registros, Convert.ToString((int)ViewBag.registros))</p>
+                                </div>
+                                @if (ViewBag.statusId == null || ViewBag.statusId.Equals(""))
+                                {
+                                    <div style="margin-right:4px;display:inline-block;vertical-align:top;">
+                                        <p style="font-weight:bold">
+                                            Activos:
+                                            @Html.Label("Activos: ", Convert.ToString((int)ViewBag.activos))
+                                        </p>
+                                    </div>
+                                }
+                                <div style="display:inline-block;">
+                                    @Html.SearchStatusList()
+                                </div>
+                            </div>
+                        }
+                        //Tabla de resultados
+                        if (!tableHtml.IsEmpty())
+                        {
+                            <div id="table-container" class="table-container">
+                                @Html.Raw(tableHtml)
+                            </div>
+                        }
+}
+
+

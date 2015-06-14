@@ -1,0 +1,141 @@
+﻿@model SUAMVC.Models.RoleFuncionesModel
+
+
+@{
+    ViewBag.Title = "Roles y Modulos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (!WebSecurity.IsAuthenticated)
+    {
+        Response.Redirect("~/Home/Index");
+    }
+
+    var vRoleId = TempData["vRoleId"];
+    var vModuleId = TempData["vModuleId"];
+
+    var tableHtml = string.Empty;
+    var tableHtml2 = string.Empty;
+    var sb = new System.Text.StringBuilder();
+    var sb2 = new System.Text.StringBuilder();
+    var grid = new WebGrid();
+    var grid2 = new WebGrid();
+
+
+    if (Model != null)
+    {
+        if (Model.funciones != null)
+        {
+            grid = new WebGrid(source: Model.funciones, canPage: false);
+            sb.Append(grid.GetHtml(
+        columns:
+            grid.Columns(
+                grid.Column(format: @<text><input type="checkbox" name="ids" value="@item.id" class="elegir" /></text>, header: "Elegir"),
+                grid.Column("descripcionCorta", "Descripcion", canSort: true, style: "col-xs-2 descripcion"),
+                grid.Column("descripcionLarga", "Funcionalidad", canSort: true, style: "col-xs-8 funcionalidad"),
+                grid.Column("modulo.descripcionCorta", "Modulo", canSort: true, style: "col-xs-2")
+            ),
+            tableStyle: "table table-fixed tableSua"));
+        }
+
+        if (Model.funcionesByRole != null)
+        {
+            grid2 = new WebGrid(source: Model.funcionesByRole, canPage: false);
+            sb2.Append(grid2.GetHtml(
+        columns:
+            grid2.Columns(
+                grid2.Column(format: @<text><input type="checkbox" name="ids2" value="@item.id" /></text>, header: "Elegir"),
+                grid2.Column("descripcionCorta", "Descripcion", null, null, true),
+                grid.Column("modulo.descripcionCorta", "Funcionalidad", null, null, true),
+                grid2.Column("descripcionLarga", "Modulo", null, null, true)
+            ),
+            tableStyle: "table table-fixed tableSua"));
+        }
+
+
+        tableHtml = sb.ToString();
+        tableHtml2 = sb2.ToString();
+    }
+
+}
+
+@section Menu {
+    <div><img src="~/Content/Images/people-b.png" width="15" height="15" /> Asociar Funciones a Rol</div>
+}
+@using (Html.BeginForm())
+{
+    <p>
+        Rol:@Html.DropDownList("roleId", "Seleccione")
+        Modulo:@Html.DropDownList("moduleId", "Seleccione")
+    </p><input class="btn btn-success" type="submit" value="Buscar" />
+}
+
+<div id="contenedor">
+    @if (!tableHtml.IsEmpty())
+    {
+        using (Html.BeginForm("asignarFuncion", "RoleFunciones", new { roleId = @vRoleId, moduleId = @vModuleId }, FormMethod.Post))
+        {
+            <div id="lgcontenedor-interno" class="panel panel-default">
+                <div class="panel-heading">Funciones sin asignar</div>
+                <div class="panel-body">
+                    <div id="lcontenedor-interno">
+                        <input type="checkbox" id="selectAll" name="slall" /> Todos
+                        @Html.Raw(tableHtml)
+                    </div>
+                    <div id="bcontenedor-interno" class="panel-footer">
+                        <input type="submit" value="" class="rarrow_button" alt="Asignar Función" />
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    @if (!tableHtml2.IsEmpty())
+    {
+        using (Html.BeginForm("desasignarFuncion", "RoleFunciones", new { roleId = @vRoleId, moduleId = @vModuleId }, FormMethod.Post))
+        {
+            <div id="rgcontenedor-interno" class="panel panel-default">
+                <div class="panel-heading">Funciones asignados</div>
+                <div class="panel-body">
+                    <div id="lcontenedor-interno">
+                        <input type="checkbox" id="selectAll2" name="slall2" /> Todos
+                        @Html.Raw(tableHtml2)
+                    </div>
+                    <div id="bcontenedor-interno" class="panel-footer">
+                        <input type="submit" value="" class="larrow_button" alt="Desasignar Función" />
+                    </div>
+                </div>
+            </div>
+
+
+        }
+
+    }
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("input[name=slall]").change(function () {
+            $('#lgcontenedor-interno input[type=checkbox]').each(function () {
+                if ($("input[name=slall]:checked").length == 1) {
+                    this.checked = true;
+                } else {
+                    this.checked = false;
+                }
+            });
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //Checkbox
+        $("input[name=slall2]").change(function () {
+            $('#rgcontenedor-interno input[type=checkbox]').each(function () {
+                if ($("input[name=slall2]:checked").length == 1) {
+                    this.checked = true;
+                } else {
+                    this.checked = false;
+                }
+            });
+        });
+
+    });
+</script>
+

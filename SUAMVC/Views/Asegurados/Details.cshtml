@@ -1,0 +1,271 @@
+﻿@model SUADATOS.Asegurado
+@using SUAMVC.Models
+
+@{
+    ViewBag.Title = "Detalle Asegurados";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Menu {
+    <div><img src="~/Content/Images/people-b.png" width="15" height="15" /> Detalle de Asegurados </div>
+}
+
+<div>
+
+    <table style="width:100%; font-size:10px;">
+        <thead>
+            <tr>
+                <th style="font-size:12px; font-weight:bolder; text-align:center; padding-bottom:10px;" colspan="6">
+                    @Html.DisplayName("Catalogo de Asegurados SUA")
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="font-weight:bold;">
+                    @Html.DisplayName("No. Seguridad Social:")
+                </td>
+                <td style="background-color: #DFDFDF; ">
+                    @Html.DisplayFor(model => model.numeroAfiliacion)
+                </td>
+                <td style="font-weight:bold;">
+                    @Html.DisplayName("Fecha Alta:")
+                </td>
+                <td style="background-color: #DFDFDF; ">
+                    @Html.DisplayFor(model => model.fechaAlta)
+                </td>
+                <td style="font-weight:bold;">
+                    @Html.DisplayName("Fecha Baja:")
+                </td>
+                <td style="background-color: #DFDFDF; ">
+                    @Html.DisplayFor(model => model.fechaBaja)
+                </td>
+            </tr>
+            <tr>
+                <td style="font-weight:bold;">
+                    @Html.DisplayName("Patrón:")
+                </td>
+                <td style="background-color: #DFDFDF; ">
+                    @Html.DisplayFor(model => model.Patrone.registro)
+                </td>
+                <td colspan="2" style="background-color: #DFDFDF; ">
+                    @Html.DisplayFor(model => model.Patrone.nombre)
+                </td>
+                <td style="font-weight:bold;">
+                    @Html.DisplayName("Extranjero:")
+                </td>
+                <td style="background-color: #DFDFDF; ">
+                    @Html.DisplayFor(model => model.extranjero)
+                </td>
+            </tr>
+            <tr>
+                <td style="font-weight:bold;">
+                    @Html.DisplayName("RFC:")
+                </td>
+                <td style="background-color: #DFDFDF; ">
+                    @Html.DisplayFor(model => model.RFC)
+                </td>
+                <td style="font-weight:bold;">
+                    @Html.DisplayName("CURP:")
+                </td>
+                <td style="background-color: #DFDFDF; ">
+                    @Html.DisplayFor(model => model.CURP)
+                </td>
+            </tr>
+            <tr>
+                <td style="font-weight:bold;">
+                    @Html.DisplayName("Nombre:")
+                </td>
+                <td colspan="3" style="background-color: #DFDFDF; ">
+                    @Html.DisplayFor(model => model.nombreTemporal)
+                </td>
+            </tr>
+            <tr>
+                <td style="font-weight:bold;">
+                    @Html.DisplayName("Ubicación/Cliente:")
+                </td>
+                <td style="background-color: #DFDFDF; ">
+                    @Html.DisplayFor(model => model.Cliente.descripcion)
+                </td>
+            </tr>
+            <tr>
+                <td style="font-weight:bold;">
+                    @Html.DisplayName("Tipo Trabajador:")
+                </td>
+                <td style="background-color: #DFDFDF; ">
+                    @Html.DropDownListFor(model => model.tipoTrabajo, new SelectList(new List<Object> {new {value = "1", text = "Permanente"},
+               new {value = "2", text = "Eventual"},
+               new {value = "3", text = "Contrucción"}
+               }, "value", "text"), new { disabled = true })
+                </td>
+                <td style="font-weight:bold;">
+                    Jornada/Sem.Red:
+                </td>
+                <td style="background-color: #DFDFDF; ">
+                    @Html.DropDownListFor(model => model.semanaJornada, new SelectList(new List<Object> {new {value = "0", text = "Semana Completa"},
+                    new {value = "1", text = "1 Dia"},
+                    new {value = "2", text = "2 Dias"},
+                    new {value = "3", text = "3 Dias"},
+                    new {value = "4", text = "4 Dias"},
+                    new {value = "5", text = "5 Dias"},
+                    new {value = "6", text = "Menor a 8 Horas"}
+               }, "value", "text"), new { @class = "select1", style = "width: 150px;", disabled = true })
+                </td>
+                <td style="font-weight:bold;">
+                    @Html.DisplayName("Trabajador Pensionado:")
+                </td>
+                <td style="background-color: #DFDFDF; ">
+                    @Html.DropDownListFor(model => model.trapeniv, new SelectList(new List<Object> {new {value = "0", text = "Sin Pensión"},
+               new {value = "1", text = "Pensión IV"},
+               new {value = "2", text = "Pensión CV"}
+               }, "value", "text"), new { @class = "select1", style = "width: 150px;", disabled = true })
+                </td>
+            </tr>
+            <tr>
+                <td style="font-weight:bold;">
+                    Sal.dia.int.:
+
+                </td>
+                <td style="background-color: #DFDFDF; ">
+                    @Html.DisplayFor(model => model.salarioImss)
+                </td>
+                <td style="font-weight:bold;">
+                    @Html.DisplayName("No. Credito:")
+                </td>
+                <td style="background-color: #DFDFDF; ">
+                    @Html.DisplayFor(model => model.paginaInfo)
+                </td>
+                <td style="font-weight:bold;">
+                    @Html.DisplayName("Suspención Crédito:")
+                </td>
+                <td style="background-color: #DFDFDF; ">
+                    @Html.DisplayFor(model => model.fechaBaja)
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+<br />
+<hr />
+<div>
+    <table style="font-size:10px; width:100%;">
+        <thead>
+            <tr>
+                <th>
+                    Movimiento
+                </th>
+                <th>
+                    F. Inicio
+                </th>
+                <th>
+                    S.D.I.
+                </th>
+                <th>
+                    Dias
+                </th>
+                <th>
+                    Folio
+                </th>
+                <th>
+                    Rama Inc.
+                </th>
+                <th>
+                    Tipo Rgo.
+                </th>
+                <th>
+                    Secuela
+                </th>
+                <th>
+                    Ctrl. Incap.
+                </th>
+                <th>
+                    F. Term.
+                </th>
+                <th>
+                    Porc_Incap.
+                </th>
+                <th>
+                    Crédito
+                </th>
+                <th>
+                    Valor
+                </th>
+                <th>
+                    Tipo
+                </th>
+                <th>
+                    Estatus
+                </th>
+                @if (SecurityUserModel.verificarPermiso("Asegurados", "Eliminar movimiento"))
+                {
+                    <th>
+                        Acción
+                    </th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.MovimientosAseguradoes.OrderBy(b => b.fechaInicio))
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.catalogoMovimiento.descripcion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.fechaInicio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.sdi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.numeroDias)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Incapacidade.folioIncapacidad)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Incapacidade.ramSeq)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Incapacidade.tieRie)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Incapacidade.secuela)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Incapacidade.conInc)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Incapacidade.fecTer)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Incapacidade.porcentajeIncapacidad)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.credito)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Asegurado.valorDescuento)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Asegurado.tipoDescuento)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.estatus)
+                    </td>
+                    @if (SecurityUserModel.verificarPermiso("Asegurados", "Eliminar movimiento"))
+                    {
+                        <td>
+                            @Html.ActionLink("Eliminar", "DeleteMov", new { id = item.id })
+                        </td>
+                    }
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<p>
+    @Html.ActionLink("Regresar", "Index")
+</p>

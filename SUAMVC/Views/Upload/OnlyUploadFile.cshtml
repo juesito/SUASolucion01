@@ -1,0 +1,62 @@
+﻿@model SUAMVC.Models.UploadModel
+@{
+    ViewBag.Title = "Actualizar datos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var message = @TempData["viewMessage"];
+    var isError = TempData["error"];
+}
+
+@section Menu {
+    <div>Actualizar Archivo SUA sin Procesar <img src="~/Content/Images/home.png" width="15" height="15" /></div>
+}
+<div>
+    @using (@Html.BeginForm("UploadFile2", "Upload", FormMethod.Post,
+            new { enctype = "multipart/form-data" }))
+    {
+        <div class="panel panel-default" style="margin-left: 15px; margin-right: 15px">
+            <div class="panel-heading">
+                <h3 class="panel-title">Seleccione los datos para la carga del archivo SUA</h3>
+            </div>
+            <div class="panel-body">
+
+                @if (!IsPost)
+                {
+                    <div class="row">
+                        <div class="col-md-12" style="padding-top:10px; width:100px;">
+                            @Html.Label("Plaza :")
+
+                        </div>
+                        <div class="col-md-3" style="padding-top:10px; width:500px;">
+                            <p>@Html.DropDownList("plazasId", null, new { onchange = "document.location.href = '/Upload/GoOnlyUploadFile?plazasId=' + this.options[this.selectedIndex].value;" })</p>
+                        </div>
+                        <div class="col-md-12" style="padding-top:60px; width:100px;">
+                            @Html.Label("Patron :")
+
+                        </div>
+                        <div class="col-md-3" style="padding-top:10px; width:500px;">
+                            @Html.DropDownList("patronesId")
+                        </div>
+                        <div class="file" style="padding-top:80px;">
+                            @FileUpload.GetHtml(initialNumberOfFiles: 1,
+                            allowMoreFilesToBeAdded: false,
+                            includeFormTag: true,
+                            uploadText: "Subir SUA.mdb")
+                        </div>
+
+                    </div>
+                }
+            </div>
+        </div>
+    }
+    @if (isError != null)
+    {
+        if (isError.Equals(false))
+        {
+            <p><span class="label label-success">@message</span></p>
+        }
+        else
+        {
+            <p><span class="label label-danger">@message</span></p>
+        }
+    }
+</div>

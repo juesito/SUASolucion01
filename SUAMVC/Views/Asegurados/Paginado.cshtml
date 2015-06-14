@@ -1,0 +1,159 @@
+﻿@model IEnumerable<SUADATOS.Asegurado>
+@using System.Text;
+
+@{
+    if (!WebSecurity.IsAuthenticated)
+    {
+        Response.Redirect("~/Home/Index");
+    }
+    ViewBag.Title = "Asegurados";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var grid = new WebGrid(source: Model, rowsPerPage: 14);
+    @functions {
+        static IHtmlString ShowPDF(string id)
+        {
+            return id != null ? new HtmlString("<img src=\"/Content/Images/pdf.gif\" class=\"icon\" />") : null;
+        }
+    }
+    var tableHtml = string.Empty;
+    var sb = new StringBuilder();
+
+    sb.Append(grid.GetHtml(
+        //      headerStyle: "webgrid-header",
+    columns:
+        grid.Columns(
+        grid.Column(format: @<text><input type="checkbox" name="ids" value="@item.id" /></text>, header: "Elegir"),
+            grid.Column("Patrone.registro", "Registro Patronal", format: @<text> @if (@item.Patrone != null)
+            {  @item.Patrone.registro }</text>, canSort: true),
+            grid.Column("numeroAfiliacion", "Num.Afiliacion", null, null, true),
+            grid.Column("curp", "CURP", null, null, true),
+            grid.Column("rfc", "RFC", null, null, true),
+            grid.Column("nombreTemporal", "Nombre", @<text><div style='width: 25em'>@item.nombreTemporal</div></text> , null, canSort: true),
+            grid.Column("fechaAlta", "Fecha Alta", @<text><div style='width: 6em'>@item.fechaAlta.ToString("dd-MM-yyyy")     </div></text>, null, canSort: true),
+            grid.Column("fechaBaja", "Fecha Baja", @<text><div style='width: 6em'>
+                    @if (@item.fechaBaja != null)
+                    { @item.fechaBaja.ToString("dd-MM-yyyy")}
+        </div></text>, null, canSort: true),
+            grid.Column("salarioImss", "Salario IMSS", format: @<text>@item.salarioImss.ToString("0.00")</text>, canSort: true),
+            grid.Column("Cliente.claveCliente", "Ubicación", format: @<text> @if (@item.Cliente != null)
+            {@item.Cliente.claveCliente}</text>, canSort: true),
+            grid.Column("Cliente.Grupos.nombreCorto", "ID.Grupo", format: @<text> @if (@item.Cliente != null)
+            {@item.Cliente.Grupos.nombreCorto}</text>, canSort: true),
+            grid.Column("ocupacion", "Ocupación",  @<text><div style='width: 12em'>@item.ocupacion </div></text>, null, canSort: true),
+            grid.Column("Patrone.Plaza.cve", "ID.Plaza", null, null, true),
+            grid.Column("extranjero", "Extranjero", null, null, true),
+            grid.Column("fechaCreacion", "Fecha Creacion", @<text><div style='width: 12em'>@item.fechaCreacion </div></text>, null, canSort: true),
+            grid.Column("fechaModificacion", "Fecha Modificación", @<text><div style='width: 10em'>
+                    @if (@item.fechaModificacion != null)
+                    { @item.fechaModificacion}
+                </div></text>, null, canSort: true),
+            grid.Column(header: "Alta",
+                format:
+
+                @<text><a href="@Url.Action("ViewAttachment", "Asegurados", new { id = item.id, option = "A", carga = item.alta })" target="_blank">
+                        @ShowPDF(item.alta)
+                    </a></text>),
+
+                    grid.Column(header: "Modificación",
+                format:
+
+                @<text><a href="@Url.Action("ViewAttachment", "Asegurados", new { id = item.id, option = "M", carga = item.modificacion })" target="_blank">
+                        @ShowPDF(item.modificacion)
+                    </a></text>),
+
+            grid.Column(header: "Baja",
+                format:
+
+                @<text><a href="@Url.Action("ViewAttachment", "Asegurados", new { id = item.id, option = "B", carga = item.baja })" target="_blank">
+                        @ShowPDF(item.baja)
+                    </a></text>),
+
+
+            grid.Column(header: "Permanente",
+                format:@<a href="@Url.Action("ViewAttachment", new { id = item.id, option = "P", carga = item.permanente })" target="_blank">
+                @ShowPDF(item.permanente)
+            </a>),
+
+           /*Links of control*/
+            grid.Column(header: "Consulta", format: @<text><a href="@Url.Action("Details", "Asegurados", new { id = item.id })">
+                <img src="~/Content/Images/list.png" alt="" style="border:none;" class="icon" />
+            </a></text>),
+            grid.Column(header: "Imagen", format: @<text><a href="@Url.Action("UploadFile", "Movimientos", new { id = item.id })">
+                    <img src="~/Content/Images/upload-blue.png" alt="" style="border:none;" class="icon" />
+                </a></text>)
+
+                        ),
+                        tableStyle: "table table-striped tableSua"
+                    ));
+
+
+    sb = sb.Replace("\r\n", string.Empty);
+    sb = sb.Replace("    ", string.Empty);
+
+    var sb1 = new StringBuilder();
+    sb1.Append(sb.ToString().Trim());
+
+    //<tfoot><tr ><td colspan=\"30\">
+    String footer = "<table><tr> " +
+                    "<td><a href=\"/Asegurados/GetExcel\">" +
+                    "<img src=\"/Content/Images/xls.png\" style=\"border:none;\" width=\"30\" height=\"30\" />" +
+                    "</a></td></tr></table>" +
+                    "</td></tr></tfoot>";
+
+    sb1 = sb1.Replace("</td></tr></tfoot>", footer);
+
+    tableHtml = sb1.ToString();
+}
+
+@section Menu {
+    <div><img src="~/Content/Images/people-b.png" width="15" height="15" /> Catalogo de Asegurados</div>
+}
+
+@using (Html.BeginForm())
+{
+    <p>
+        Plaza: @Html.DropDownList("plazasId", "Seleccione")
+
+        Patron: @Html.DropDownList("patronesId", "Seleccione")
+
+        Grupo: @Html.DropDownList("gruposId", "Seleccione")
+
+        Cliente: @Html.DropDownList("clientesId", "Seleccione")
+
+        <input type="submit" value="Consultar" class="btn btn-success" } />
+
+        <a href="@Url.Action("GetExcel", "Acreditados")" style="text-align:right">
+            <img src="~/Content/Images/xls.png" alt="" style="border:none;" width="30" height="30" />
+        </a>
+
+    </p>
+
+    <div style="float: right; ">
+
+        Registros: @Html.Label("Registros: ", Convert.ToString((int)grid.TotalRowCount))
+
+        Activos: @Html.Label("Activos: ", Convert.ToString((int)ViewBag.activos))
+
+    </div>
+
+}
+
+@using (Html.BeginForm("UploadFiles", "Movimientos", FormMethod.Post))
+{
+    <input type="submit" value="subir pdfs" class="btn btn-success" />
+
+    if (!tableHtml.IsEmpty())
+    {
+        @Html.Raw(tableHtml)
+    }
+
+
+}
+
+@using (Html.BeginForm("Index2"))
+{
+    <input type="submit" value="Buscador" class="btn btn-success" />
+
+}
+
+

@@ -1,0 +1,447 @@
+﻿@model SUADATOS.Pago
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (!WebSecurity.IsAuthenticated)
+    {
+        Response.Redirect("~/Home/Index");
+    }
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Pago</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ip)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ip)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NSS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NSS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RFC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RFC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CURP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CURP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.creditoInfonavit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.creditoInfonavit)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.trabajador)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.trabajador)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.sdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tipoTrabajador)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tipoTrabajador)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.jornadaSemanaReducida)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.jornadaSemanaReducida)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.diasCotizadosMes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.diasCotizadosMes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.diasIncapacidad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.diasIncapacidad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.diasAusentismo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.diasAusentismo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cuotaFija)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cuotaFija)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cuotaExcedente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cuotaExcedente)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.prestacionesDinero)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.prestacionesDinero)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.gastosMedicosPensionado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.gastosMedicosPensionado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.riesgoTrabajo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.riesgoTrabajo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.invalidezVida)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.invalidezVida)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.guarderias)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.guarderias)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.actRecargosIMSS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.actRecargosIMSS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.diasCotizadosBimestre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.diasCotizadosBimestre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.diasCapacidadBimestre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.diasCapacidadBimestre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.diasAusentismoBimestre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.diasAusentismoBimestre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.retiro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.retiro)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.actRecargosRetiro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.actRecargosRetiro)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cesantiaVejezPatronal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cesantiaVejezPatronal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cesantiaVejezObrera)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cesantiaVejezObrera)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.actRecargosCyV)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.actRecargosCyV)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.aportacionVoluntaria)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.aportacionVoluntaria)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.aportacionComp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.aportacionComp)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.aportacionPatronal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.aportacionPatronal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.amortizacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.amortizacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.actIMSS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.actIMSS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.recIMSS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.recIMSS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.actRetiro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.actRetiro)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.recRetiro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.recRetiro)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.actCesPat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.actCesPat)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.recCesPat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.recCesPat)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.actCesObr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.actCesObr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.recCesObr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.recCesObr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cuotaExcObr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cuotaExcObr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cuotaPdObr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cuotaPdObr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cuotaGmpObr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cuotaGmpObr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cuotaIvObr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cuotaIvObr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.actPatIMSS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.actPatIMSS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.recPatIMSS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.recPatIMSS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.actObrIMSS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.actObrIMSS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.recObrIMSS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.recObrIMSS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.anoPago)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.anoPago)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mesPago)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mesPago)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Asegurado.numeroAfiliacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Asegurado.numeroAfiliacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Patrone.registro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Patrone.registro)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

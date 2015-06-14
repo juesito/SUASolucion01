@@ -1,0 +1,56 @@
+﻿@model IEnumerable<SUADATOS.Cliente>
+@using SUADATOS
+@using SUAMVC.Models
+@using System.Text;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var grid = new WebGrid(source: Model,canPage: false);
+    if (!WebSecurity.IsAuthenticated)
+    {
+        Response.Redirect("~/Home/Index");
+    }
+}
+
+@section Menu {
+    <div>Catalogo de Clientes <img src="~/Content/Images/people-b.png" width="15" height="15" /></div>
+}
+
+
+@using (Html.BeginForm())
+{
+    <p>
+        Plaza: @Html.DropDownList("plazasId", "Seleccione Plaza")
+
+        <input type="submit" value="Consultar" class="btn btn-success" />
+    </p>
+}
+
+<p>
+    @Html.ActionLink("Crear Cliente", "Create", "Clientes", new { @class = "btn btn-success" })
+</p>
+
+
+@grid.GetHtml(
+    columns:
+        grid.Columns(
+            grid.Column("claveCliente", "Clave Cliente", null, null, true),
+            grid.Column("claveSUA", "Clave SUA", null, null, true),
+            grid.Column("rfc", "RFC", null, null, true),
+            grid.Column("descripcion", "Descripción", null, null, true),
+            grid.Column("Plaza.cveCorta", "Plaza", null, null, true),
+            grid.Column("Grupos.nombreCorto", "Grupo", null, null, true),
+
+            grid.Column("ejecutivo", "Ejecutivo", @<text><div style='width: 23em'>@item.ejecutivo</div></text>, null, true),
+            grid.Column(header: "Consultar", format: @<text><a href="@Url.Action("Details", "Clientes", new { id = item.id })">
+                    <img src="~/Content/Images/edit.png" alt="" style="border:none;" class="icon" />
+                </a></text>),
+            grid.Column(header: "Editar", format: @<text><a href="@Url.Action("Edit", "Clientes", new { id = item.id })">
+                    <img src="~/Content/Images/edit.png" alt="" style="border:none;" class="icon" />
+                </a></text>),
+            grid.Column(header: "Eliminar", format: @<text><a href="@Url.Action("Delete", "Clientes", new { id = item.id })">
+                <img src="~/Content/Images/delete.png" alt="" style="border:none;" class="icon" />
+                </a></text>)),
+                                    tableStyle: "table table-striped tableSua"
+                    )
+
